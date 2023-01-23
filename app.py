@@ -17,6 +17,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
+	print("working main route")
 	return 'Hello World!'
 
 @app.route('/submit_omr', methods=['GET','POST'])
