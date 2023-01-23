@@ -20,7 +20,7 @@ def hello_world():
 	print("working main route")
 	return 'Hello World!'
 
-@app.route('/submit_omr', methods=['GET','POST'])
+@app.route('/submit_omr', methods=['POST'])
 def submit_omr():
     data = request.get_json()
     print(data)
