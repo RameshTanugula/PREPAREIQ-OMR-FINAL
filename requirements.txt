@@ -1,5 +1,6 @@
-opencv-python
-numpy==1.22.4
-matplotlib==3.6.2
-scikit-image==0.19.3
-pandas==1.4.4
+opencv-python-headless
+numpy
+matplotlib
+scikit-image
+pandas
+flask
