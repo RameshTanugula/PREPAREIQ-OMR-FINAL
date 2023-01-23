@@ -15,6 +15,10 @@ from skimage import io
 import json
 app = Flask(__name__)
 
+@app.route('/')
+def hello_world():
+	return 'Hello World!'
+
 @app.route('/submit_omr', methods=['GET','POST'])
 def submit_omr():
     data = request.get_json()
