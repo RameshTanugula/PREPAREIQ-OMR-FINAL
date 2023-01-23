@@ -14,6 +14,9 @@ import matplotlib.pyplot as plt
 from skimage import io
 import json
 app = Flask(__name__)
+import run
+PresentConfig = run.BaseConfig
+app = run.create_app(PresentConfig)
 
 # @app.route('/home')
 # def hello_world():
