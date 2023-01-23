@@ -27,7 +27,7 @@ def index():
 def _test(argument):
     return "TEST: %s" % argument
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/submit', methods=['GET', 'POST'])
 def submit_omr():
     data = request.get_json()
     print(data)
