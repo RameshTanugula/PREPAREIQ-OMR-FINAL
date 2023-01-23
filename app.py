@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[6]:
+# In[11]:
 
 
+from flask import Flask, jsonify, request
 import cv2
 import numpy as np
 import pandas as pd
@@ -11,21 +12,18 @@ from uuid import uuid4
 from utils1 import find_paper,id_read,read_answer
 import matplotlib.pyplot as plt
 from skimage import io
-import streamlit as st
 import json
+app = Flask(__name__)
 
-
-# In[2]:
-st.title("OMR SHEET CORRECTION")
-html_temp = """
-<div style="background-color:tomato;padding:10px">
-<h2 style="color:white;text-align:center;"> OMR APP </h2>
-</div>
-            """
-test = st.text_input("please write text")
-def OMR(url):
-
-    image = io.imread(url)
+@app.route('/submit_omr', methods=['GET','POST'])
+def submit_omr():
+    data = request.get_json()
+    print(data)
+    file = data['file']
+    key = data['key']
+    test_id1 = data['testId']
+    roll_no = data['rollNo']
+    image = io.imread(file)
     d=find_paper(image)
     ## Answers Read   
     s_id=d[195:450,35:305]
@@ -73,44 +71,28 @@ def OMR(url):
         s20=read_answer(q20)
         final=s1+s2+s3+s4+s5+s6+s7+s8+s9+s10+s11+s12+s13+s14+s15+s16+s17+s18+s19+s20
         return final
+    def convert(list):
+        s = [str(i) for i in list]
+        res = int("".join(s))
+        return(res)
     y=id_read(s_id)
-    s = str(y)
-    s = s.replace(',', "")
-    student_id=s.replace(" ", "")
+    student_id=convert(y)
     x=id_read(t_id)
-    t = str(x)
-    t = t.replace(',', "")
-    test_id=t.replace(" ", "")
+    test_id=convert(x)
     bubbled=answers()
-    return student_id,test_id,bubbled
-   
+    marks = 0
+    for i in range(len(key)):
+        if key[i] == 0:
+            marks += 1
+        elif key[i] == bubbled[i]:
+            marks += 1
+    total=marks
+    none_count = len([x for x in bubbled if x is None])
+    worng=100-total-none_count
+    k=(student_id==roll_no)
+    h=(test_id==test_id1)
+    return {"Rollno_matched":k,"TestId_matched":h,"Answered":bubbled,"Key":key,"Total_marks":total,"Total_worng":worng,"Count_None_values":none_count}
+#     return jsonify({"message":"successful"})
 
-
-# In[3]:
-
-
-if test is None:
-    st.text("Please upload the text")
-else:
-    a,b,c = OMR(test)
-    def Convert(string):
-        li = list(string.split(" "))
-        return li
-    k=Convert(a)
-    h=Convert(b)
-    student_id=pd.DataFrame(k,columns=['student_id'])
-    test_id=pd.DataFrame(h,columns=['test_id'])
-    ans=pd.DataFrame(c,columns=['Answered'])
-    st.dataframe(student_id)
-    st.download_button('Download json',student_id.to_json(),mime='text/json')
-    st.dataframe(test_id)
-    st.download_button('Download json',test_id.to_json(),mime='text/json')
-    st.dataframe(ans)
-    st.download_button('Download json',ans.to_json(),mime='text/json')
-
-
-# In[ ]:
-
-
-
-
+if __name__ == '__main__':
+    app.run()
