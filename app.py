@@ -15,7 +15,7 @@ from skimage import io
 import json
 app = Flask(__name__)
 
-@app.route('/home')
+@app.route('/')
 def hello_world():
 	print("working main route")
 	return 'Hello World!'
