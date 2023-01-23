@@ -20,6 +20,13 @@ app = Flask(__name__)
 # 	print("working main route")
 # 	return 'Hello World!'
 
+@app.route("/index")
+def index():
+    return _test("My Test Data")
+
+def _test(argument):
+    return "TEST: %s" % argument
+
 @app.route('/', methods=['POST'])
 def submit_omr():
     data = request.get_json()
