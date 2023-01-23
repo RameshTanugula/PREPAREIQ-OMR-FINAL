@@ -95,5 +95,5 @@ def submit_omr():
 #     return jsonify({"message":"successful"})
 
 if __name__ == '__main__':
-   app.run('0.0.0.0', port=5000)
+   app.run()
 
