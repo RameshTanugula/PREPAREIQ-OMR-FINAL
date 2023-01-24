@@ -1,0 +1,5 @@
+https://github.com/yeshwanthlm/YouTube/blob/main/flask-on-aws-ec2.md
+
+to run - nohup gunicorn -b 0.0.0.0:8000 app:app
+
+api - http://3.110.197.70/submit
