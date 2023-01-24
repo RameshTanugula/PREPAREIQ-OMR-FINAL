@@ -5,6 +5,7 @@
 
 
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 import cv2
 import numpy as np
 import pandas as pd
@@ -14,20 +15,16 @@ import matplotlib.pyplot as plt
 from skimage import io
 import json
 app = Flask(__name__)
-
+app.config['SECRET_KEY'] = '1'
+app.config['CORS_HEADERS'] = 'Content-Type'
+cors = CORS(app, resources={r"/foo": {"origins": "http://localhost:port"}})
 @app.route('/')
 def hello_world():
 	print("working main route")
 	return 'Hello World!'
 
-@app.route("/index")
-def index():
-    return _test("My Test Data")
-
-def _test(argument):
-    return "TEST: %s" % argument
-
 @app.route('/submit', methods=['GET', 'POST'])
+@cross_origin(origin='localhost',headers=['Content- Type','Authorization'])
 def submit_omr():
     data = request.get_json()
     print(data)
