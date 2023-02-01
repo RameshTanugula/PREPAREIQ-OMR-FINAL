@@ -20,6 +20,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 cors = CORS(app, resources={r"/foo": {"origins": "http://localhost:port"}})
 
 @app.route('/submit', methods=['GET', 'POST'])
+print('post submit')
 @cross_origin(origin='localhost',headers=['Content- Type','Authorization'])
 def submit_omr():
     data = request.get_json()
