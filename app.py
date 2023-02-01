@@ -24,7 +24,6 @@ cors = CORS(app, resources={r"/foo": {"origins": "http://localhost:port"}})
 def submit_omr():
     data = request.get_json()
 print('post submit', data)
-    print(data)
     file = data['file']
     key = data['key']
     test_id1 = data['testId']
