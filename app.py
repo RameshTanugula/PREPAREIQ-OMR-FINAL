@@ -14,7 +14,7 @@ from utils1 import find_paper,id_read,read_answer
 import matplotlib.pyplot as plt
 from skimage import io
 import json
-app = Flask(_name_)
+app = Flask(__name__)
 app.config['SECRET_KEY'] = '1'
 app.config['CORS_HEADERS'] = 'Content-Type'
 cors = CORS(app, resources={r"/foo": {"origins": "http://localhost:port"}})
@@ -85,6 +85,6 @@ def submit_omr():
     return {"Rollno_matched":k,"TestId_matched":h,"Answered":bubbled,"Key":key,"Total_marks":total,"Total_worng":worng,"Count_None_values":none_count}
 #     return jsonify({"message":"successful"})
 
-if _name_ == '_main_':
+if _name_ == '__main__':
     app.run(host='0.0.0.0', port=80)
 
