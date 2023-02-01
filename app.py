@@ -23,7 +23,7 @@ cors = CORS(app, resources={r"/foo": {"origins": "http://localhost:port"}})
 @cross_origin(origin='localhost',headers=['Content- Type','Authorization'])
 def submit_omr():
     data = request.get_json()
-print('post submit', data)
+    print('post submit', data)
     file = data['file']
     key = data['key']
     test_id1 = data['testId']
