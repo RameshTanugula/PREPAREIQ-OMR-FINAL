@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[11]:
+# In[ ]:
 
 
 from flask import Flask, jsonify, request
@@ -14,14 +14,10 @@ from utils1 import find_paper,id_read,read_answer
 import matplotlib.pyplot as plt
 from skimage import io
 import json
-app = Flask(__name__)
+app = Flask(_name_)
 app.config['SECRET_KEY'] = '1'
 app.config['CORS_HEADERS'] = 'Content-Type'
 cors = CORS(app, resources={r"/foo": {"origins": "http://localhost:port"}})
-@app.route('/')
-def hello_world():
-	print("working main route")
-	return 'Hello World!'
 
 @app.route('/submit', methods=['GET', 'POST'])
 @cross_origin(origin='localhost',headers=['Content- Type','Authorization'])
@@ -35,28 +31,24 @@ def submit_omr():
     image = io.imread(file)
     d=find_paper(image)
     ## Answers Read   
-    s_id=d[195:450,35:305]
-    t_id=d[195:450,355:435]
-    q1=d[520:645,90:195]
-    q2=d[695:820,90:195]
-    q3=d[875:1000,90:195]
-    q4=d[1050:1175,90:195]
-    q5=d[520:645,275:385]
-    q6=d[695:820,275:385]
-    q7=d[870:995,275:385]
-    q8=d[1050:1175,275:385]
-    q9=d[520:645,460:570]
-    q10=d[695:820,460:570]
-    q11=d[870:995,460:570]
-    q12=d[1045:1170,460:570]
-    q13=d[520:645,645:755]
-    q14=d[695:820,645:755]
-    q15=d[870:995,645:755]
-    q16=d[1045:1170,645:755]
-    q17=d[520:645,830:940]
-    q18=d[695:820,830:940]
-    q19=d[870:995,830:940]
-    q20=d[1045:1170,830:940]
+    s_id=d[75:345,15:305]
+    t_id=d[75:345,340:435]
+
+    q1=d[430:990,60:215] #1/2 part of q1
+    q2=d[1000:1580,60:215] #2/2 part of q1
+
+    q3=d[425:990,305:460] #1/2 part of q2
+    q4=d[1000:1580,305:460] #2/2 part of q2
+
+    q5=d[425:990,550:705] #1/2 part of q3
+    q6=d[1000:1580,550:705] #2/2 part of q3
+
+    q7=d[425:990,795:950] #1/2 part of q4
+    q8=d[1000:1580,795:950] #2/2 part of q4
+
+    q9=d[425:990,1030:1190] #1/2 part of q5
+    q10=d[1000:1580,1030:1190] #2/2 part of q5
+
     def answers():
         s1=read_answer(q1) 
         s2=read_answer(q2)
@@ -68,17 +60,7 @@ def submit_omr():
         s8=read_answer(q8)
         s9=read_answer(q9)
         s10=read_answer(q10)
-        s11=read_answer(q11)
-        s12=read_answer(q12)
-        s13=read_answer(q13)
-        s14=read_answer(q14)
-        s15=read_answer(q15)
-        s16=read_answer(q16)
-        s17=read_answer(q17)
-        s18=read_answer(q18)
-        s19=read_answer(q19)
-        s20=read_answer(q20)
-        final=s1+s2+s3+s4+s5+s6+s7+s8+s9+s10+s11+s12+s13+s14+s15+s16+s17+s18+s19+s20
+        final=s1+s2+s3+s4+s5+s6+s7+s8+s9+s10
         return final
     def convert(list):
         s = [str(i) for i in list]
@@ -103,5 +85,6 @@ def submit_omr():
     return {"Rollno_matched":k,"TestId_matched":h,"Answered":bubbled,"Key":key,"Total_marks":total,"Total_worng":worng,"Count_None_values":none_count}
 #     return jsonify({"message":"successful"})
 
-if __name__ == '__main__':
+if _name_ == '_main_':
     app.run(host='0.0.0.0', port=80)
+
