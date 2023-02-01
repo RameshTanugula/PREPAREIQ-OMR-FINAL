@@ -36,7 +36,7 @@ def find_paper(image):
     '''
     
     # define readed answersheet image output size
-    (max_width, max_height) = (1000, 1300)
+    (max_width, max_height) = (1200, 1600)
     
     img_original = image.copy()
     
@@ -81,7 +81,7 @@ def read_answer(roi,debug: bool = True) :
     '''
         Read answer mark from a specific region of the answer sheet and return a result as a list.
     '''
-    n_questions=5
+    n_questions=10
     grey = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
     inp = cv2.GaussianBlur(grey, ksize = (15, 15), sigmaX = 1)
 
@@ -107,17 +107,17 @@ def read_answer(roi,debug: bool = True) :
             pass
 #             print(x, y)
         
-        if x in range(0, 25):
-            readed.append((int(y // 23) + 1, 1))
+        if x in range(0, 38):
+            readed.append((int(y // 56) + 1, 1))
             
-        elif x in range(25, 50):
-            readed.append((int(y // 23) + 1, 2))
+        elif x in range(38, 76):
+            readed.append((int(y // 56) + 1, 2))
             
-        elif x in range(50, 75):
-            readed.append((int(y // 23) + 1, 3))
+        elif x in range(76, 114):
+            readed.append((int(y // 56) + 1, 3))
             
-        elif x in range(75, 105):
-            readed.append((int(y // 23) + 1, 4))
+        elif x in range(114, 152):
+            readed.append((int(y // 56) + 1, 4))
     idx1=0
     for t1 in readed:
         for t2 in readed:
@@ -163,38 +163,38 @@ def id_read(image, debug: bool = True):
             
         if debug:
             pass
-            #print(y)
+#             print(y)
             
-        if y in range(0, 25):
+        if y in range(0, 27):
+            Id.append(0)
+            
+        elif y in range(27, 54):
             Id.append(1)
-            
-        elif y in range(25, 50):
+                
+        elif y in range(54,81):
             Id.append(2)
                 
-        elif y in range(50,75):
+        elif y in range(81, 108):
             Id.append(3)
                 
-        elif y in range(75, 100):
+        elif y in range(108,135):
             Id.append(4)
                 
-        elif y in range(100,125):
+        elif y in range(135,162):
             Id.append(5)
                 
-        elif y in range(125,150):
+        elif y in range(162,189):
             Id.append(6)
-                
-        elif y in range(150,175):
-            Id.append(7)
             
-        elif y in range(175, 200):
+        elif y in range(189, 216):
+            Id.append(7)
+                
+        elif y in range(216, 243):
             Id.append(8)
                 
-        elif y in range(200, 225):
+        elif y in range(243,270):
             Id.append(9)
-                
-        elif y in range(225,250):
-            Id.append(0)
-       
+        
     
     return (Id)
 
