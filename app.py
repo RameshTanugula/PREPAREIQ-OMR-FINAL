@@ -85,6 +85,6 @@ def submit_omr():
     return {"Rollno_matched":k,"TestId_matched":h,"Answered":bubbled,"Key":key,"Total_marks":total,"Total_worng":worng,"Count_None_values":none_count}
 #     return jsonify({"message":"successful"})
 
-if _name_ == '__main__':
+if __name__ == '_main_':
     app.run(host='0.0.0.0', port=80)
 
