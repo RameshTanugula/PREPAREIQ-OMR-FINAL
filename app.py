@@ -23,7 +23,7 @@ cors = CORS(app, resources={r"/foo": {"origins": "http://localhost:port"}})
 @cross_origin(origin='localhost',headers=['Content- Type','Authorization'])
 def submit_omr():
     data = request.get_json()
-    print('post submit', data)
+    print(data)
     file = data['file']
     key = data['key']
     test_id1 = data['testId']
@@ -31,23 +31,23 @@ def submit_omr():
     image = io.imread(file)
     d=find_paper(image)
     ## Answers Read   
-    s_id=d[75:345,15:305]
-    t_id=d[75:345,340:435]
+    s_id=d[55:260,10:255]
+    t_id=d[55:260,280:365]
 
-    q1=d[430:990,60:215] #1/2 part of q1
-    q2=d[1000:1580,60:215] #2/2 part of q1
+    q1=d[310:750,50:180]
+    q2=d[750:1190,50:180]
 
-    q3=d[425:990,305:460] #1/2 part of q2
-    q4=d[1000:1580,305:460] #2/2 part of q2
+    q3=d[310:750,255:380]
+    q4=d[750:1190,255:380]
 
-    q5=d[425:990,550:705] #1/2 part of q3
-    q6=d[1000:1580,550:705] #2/2 part of q3
+    q5=d[310:750,455:585]
+    q6=d[750:1190,455:585]
 
-    q7=d[425:990,795:950] #1/2 part of q4
-    q8=d[1000:1580,795:950] #2/2 part of q4
+    q7=d[310:750,660:790]
+    q8=d[750:1190,660:790]
 
-    q9=d[425:990,1030:1190] #1/2 part of q5
-    q10=d[1000:1580,1030:1190] #2/2 part of q5
+    q9=d[310:750,860:990]
+    q10=d[750:1190,860:995]
 
     def answers():
         s1=read_answer(q1) 
@@ -87,4 +87,3 @@ def submit_omr():
 
 if __name__ == '_main_':
     app.run(host='0.0.0.0', port=80)
-
