@@ -36,7 +36,7 @@ def find_paper(image):
     '''
     
     # define readed answersheet image output size
-    (max_width, max_height) = (1200, 1600)
+    (max_width, max_height) = (1000, 1200)
     
     img_original = image.copy()
     
@@ -83,19 +83,12 @@ def read_answer(roi,debug: bool = True) :
     '''
     n_questions=10
     grey = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
-    inp = cv2.GaussianBlur(grey, ksize = (15, 15), sigmaX = 1)
-
-    (_, res) = cv2.threshold(inp, 185, 255, cv2.THRESH_BINARY)
-
-    res = cv2.morphologyEx(res, cv2.MORPH_CLOSE, np.ones((3, 3), dtype = np.uint8), iterations = 3)
-    res = cv2.dilate(res, kernel = (3, 3))
-    
-    if debug:
-        pass
-#         cv2.imshow(str(uuid4()), res)
-#         cv2.waitKey(0)
-
-    (contours, _) = cv2.findContours(res, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+    inp = cv2.GaussianBlur(grey, ksize = (1, 1), sigmaX = 1)
+    (_, res) = cv2.threshold(inp, 128, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+    kernel = np.ones((3,3), np.uint8)
+    res = cv2.dilate(res, kernel,iterations=1)
+    res = cv2.morphologyEx(res, cv2.MORPH_CLOSE,kernel, iterations = 2)
+    (contours, _) = cv2.findContours(res, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
     readed = []
 
@@ -107,17 +100,17 @@ def read_answer(roi,debug: bool = True) :
             pass
 #             print(x, y)
         
-        if x in range(0, 38):
-            readed.append((int(y // 56) + 1, 1))
+        if x in range(0, 31):
+            readed.append((int(y // 44) + 1, 1))
             
-        elif x in range(38, 76):
-            readed.append((int(y // 56) + 1, 2))
+        elif x in range(31, 62):
+            readed.append((int(y // 44) + 1, 2))
             
-        elif x in range(76, 114):
-            readed.append((int(y // 56) + 1, 3))
+        elif x in range(62, 93):
+            readed.append((int(y // 44) + 1, 3))
             
-        elif x in range(114, 152):
-            readed.append((int(y // 56) + 1, 4))
+        elif x in range(93, 125):
+            readed.append((int(y // 44) + 1, 4))
     idx1=0
     for t1 in readed:
         for t2 in readed:
@@ -145,18 +138,15 @@ def id_read(image, debug: bool = True):
     '''
     
     img = image
-    
     grey = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    inp = cv2.GaussianBlur(grey, ksize = (3, 3), sigmaX = 1)
-
-    (_, res) = cv2.threshold(inp, 178, 255, cv2.THRESH_BINARY)
-
-    res = cv2.morphologyEx(res, cv2.MORPH_CLOSE, np.ones((3, 3), dtype = np.uint8), iterations = 4)
-    res = cv2.dilate(res, kernel = (5, 5), iterations = 3)
-
-    Id = []
+    inp = cv2.GaussianBlur(grey, ksize = (1,1), sigmaX = 1)
+    (_, res) = cv2.threshold(inp, 128, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+    kernel = np.ones((3,3), np.uint8)
+    res = cv2.dilate(res, kernel, iterations = 1)
+    res = cv2.morphologyEx(res, cv2.MORPH_CLOSE,kernel, iterations = 4)
+    (contours, _) = cv2.findContours(res, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     
-    (contours, _) = cv2.findContours(res, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+    Id=[]
         
     for cnt in (contours[1:][::-1]):
         (x, y, w, h) = cv2.boundingRect(cnt)
@@ -165,34 +155,34 @@ def id_read(image, debug: bool = True):
             pass
 #             print(y)
             
-        if y in range(0, 27):
+        if y in range(0, 20):
             Id.append(0)
             
-        elif y in range(27, 54):
+        elif y in range(20, 40):
             Id.append(1)
                 
-        elif y in range(54,81):
+        elif y in range(40,60):
             Id.append(2)
                 
-        elif y in range(81, 108):
+        elif y in range(60, 80):
             Id.append(3)
                 
-        elif y in range(108,135):
+        elif y in range(80,100):
             Id.append(4)
                 
-        elif y in range(135,162):
+        elif y in range(100,120):
             Id.append(5)
                 
-        elif y in range(162,189):
+        elif y in range(120,140):
             Id.append(6)
             
-        elif y in range(189, 216):
+        elif y in range(140, 160):
             Id.append(7)
                 
-        elif y in range(216, 243):
+        elif y in range(160, 180):
             Id.append(8)
                 
-        elif y in range(243,270):
+        elif y in range(180,200):
             Id.append(9)
         
     
