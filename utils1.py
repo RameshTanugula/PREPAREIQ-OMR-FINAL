@@ -83,11 +83,11 @@ def read_answer(roi,debug: bool = True) :
     '''
     n_questions=10
     grey = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
-    inp = cv2.GaussianBlur(grey, ksize = (1, 1), sigmaX = 1)
+    inp = cv2.GaussianBlur(grey, ksize = (15, 15), sigmaX = 1)
     (_, res) = cv2.threshold(inp, 128, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
     kernel = np.ones((3,3), np.uint8)
     res = cv2.dilate(res, kernel,iterations=1)
-    res = cv2.morphologyEx(res, cv2.MORPH_CLOSE,kernel, iterations = 2)
+    res = cv2.morphologyEx(res, cv2.MORPH_CLOSE,kernel, iterations = 3)
     (contours, _) = cv2.findContours(res, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
     readed = []
@@ -139,11 +139,11 @@ def id_read(image, debug: bool = True):
     
     img = image
     grey = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    inp = cv2.GaussianBlur(grey, ksize = (1,1), sigmaX = 1)
+    inp = cv2.GaussianBlur(grey, ksize = (15,15), sigmaX = 1)
     (_, res) = cv2.threshold(inp, 128, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
     kernel = np.ones((3,3), np.uint8)
     res = cv2.dilate(res, kernel, iterations = 1)
-    res = cv2.morphologyEx(res, cv2.MORPH_CLOSE,kernel, iterations = 4)
+    res = cv2.morphologyEx(res, cv2.MORPH_CLOSE,kernel, iterations = 3)
     (contours, _) = cv2.findContours(res, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     
     Id=[]
