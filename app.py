@@ -66,20 +66,11 @@ def submit_omr():
         s = [str(i) for i in list]
         res = int("".join(s))
         return(res)
-    try:
-        y=id_read(s_id)
-        student_id=convert(y)
-    except ValueError:
-        print("student_id is not found")
-    try:
-        x=id_read(t_id)
-        test_id=convert(x)
-    except ValueError:
-        print("test_id is not found")
-    try:
-        bubbled=answers()
-    except ValueError:
-        print("Bubbled Answers are not found")
+    y=id_read(s_id)
+    student_id=convert(y)
+    x=id_read(t_id)
+    test_id=convert(x)
+    bubbled=answers()
     marks = 0
     for i in range(len(key)):
         if key[i] == 0:
@@ -96,4 +87,4 @@ def submit_omr():
 
 if __name__ == '_main_':
     app.run(host='0.0.0.0', port=80)
-
+    
