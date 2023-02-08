@@ -152,8 +152,8 @@ def id_read(image, debug: bool = True):
         (x, y, w, h) = cv2.boundingRect(cnt)
             
         if debug:
-            pass
-#             print(y)
+             pass
+            #print(x,y)
             
         if y in range(0, 20):
             Id.append(0)
@@ -182,9 +182,9 @@ def id_read(image, debug: bool = True):
         elif y in range(160, 180):
             Id.append(8)
                 
-        elif y in range(180,200):
+        elif y in range(180,206):
             Id.append(9)
         
+        
     
-    return (Id)
-
+    return Id
