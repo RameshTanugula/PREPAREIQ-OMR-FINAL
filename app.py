@@ -30,56 +30,72 @@ def submit_omr():
     roll_no = data['rollNo']
     image = io.imread(file)
     d=find_paper(image)
-    ## Answers Read   
-    s_id=d[55:260,10:255]
-    t_id=d[55:260,280:365]
-
-    q1=d[310:750,50:180]
-    q2=d[750:1190,50:180]
-
-    q3=d[310:750,255:380]
-    q4=d[750:1190,255:380]
-
-    q5=d[310:750,455:585]
-    q6=d[750:1190,455:585]
-
-    q7=d[310:750,660:790]
-    q8=d[750:1190,660:790]
-
-    q9=d[310:750,860:990]
-    q10=d[750:1190,860:995]
-
     def answers():
+        q1=d[440:1240,55:190]
+        q2=d[440:1240,255:390]
+        q3=d[440:1240,455:590]
+        q4=d[440:1240,655:790]
+        q5=d[440:1240,855:990]
+
         s1=read_answer(q1) 
         s2=read_answer(q2)
         s3=read_answer(q3) 
         s4=read_answer(q4) 
         s5=read_answer(q5)
-        s6=read_answer(q6)
-        s7=read_answer(q7)
-        s8=read_answer(q8)
-        s9=read_answer(q9)
-        s10=read_answer(q10)
-        final=s1+s2+s3+s4+s5+s6+s7+s8+s9+s10
+        final=s1+s2+s3+s4+s5
         return final
-    def convert(list):
-        s = [str(i) for i in list]
-        res = int("".join(s))
-        return(res)
+    def s_id_reader():
+        std_1=d[80:345,20:38]
+        std_2=d[80:345,43:63]
+        std_3=d[80:345,66:88]
+        std_4=d[80:345,92:111]
+        std_5=d[80:345,117:136]
+        std_6=d[80:345,142:161]
+        std_7=d[80:345,167:185]
+        std_8=d[80:345,191:210]
+        std_9=d[80:345,215:234]
+        std_10=d[80:345,239:258]
+
+        st_1=id_read(std_1) 
+        st_2=id_read(std_2)
+        st_3=id_read(std_3)
+        st_4=id_read(std_4)
+        st_5=id_read(std_5)
+        st_6=id_read(std_6)
+        st_7=id_read(std_7)
+        st_8=id_read(std_8)
+        st_9=id_read(std_9)
+        st_10=id_read(std_10)
+        student_Id=st_1+st_2+st_3+st_4+st_5+st_6+st_7+st_8+st_9+st_10
+        return student_Id
+    def t_id_reader():
+        t_id_1=d[80:345,287:306]
+        t_id_2=d[80:345,315:336]
+        t_id_3=d[80:345,344:365]
+        t_1=id_read(t_id_1) 
+        t_2=id_read(t_id_2)
+        t_3=id_read(t_id_3)
+        t_Id=t_1+t_2+t_3
+        return t_Id 
+    bubbled = None
+    student_id = None
+    test_id = None
+
     try:
-        y=id_read(s_id)
-        student_id=convert(y)
+        bubbled = answers()
+    except ValueError:
+        print("Bubbled answers are not found")
+
+    try:
+        student_id = s_id_reader()
     except ValueError:
         print("student_id is not found")
+
     try:
-        x=id_read(t_id)
-        test_id=convert(x)
+        test_id = t_id_reader()
     except ValueError:
         print("test_id is not found")
-    try:
-        bubbled=answers()
-    except ValueError:
-        print("Bubbled Answers are not found")
+    
     marks = 0
     for i in range(len(key)):
         if key[i] == 0:
