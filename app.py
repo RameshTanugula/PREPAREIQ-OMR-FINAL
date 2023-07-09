@@ -107,7 +107,7 @@ def submit_omr():
     worng=100-total-none_count
     k=(student_id==roll_no)
     h=(test_id==test_id1)
-    return {"Rollno_matched":k,"TestId_matched":h,"Answered":bubbled,"Key":key,"Total_marks":total,"Total_worng":worng,"Count_None_values":none_count}
+    return {"Rollno_matched":k,"TestId_matched":h,"answeredQuestions":bubbled,"Key":key,"Total_marks":total,"Total_worng":worng,"Count_None_values":none_count}
 #     return jsonify({"message":"successful"})
 
 if __name__ == '_main_':
